@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Inteligente - Cérebro Zinco</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="icons/icon-192x192.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho com logo e navegação -->
+        <header>
+            <div class="logo-header">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <h1><span class="logo-text">Cérebro</span> <span class="logo-accent">Zinco</span></h1>
+            </div>
+            
+            <nav class="main-nav">
+                <button class="nav-btn active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Início</span>
+                </button>
+                <button class="nav-btn" data-section="tasks">
+                    <i class="fas fa-tasks"></i>
+                    <span>Tarefas</span>
+                </button>
+                <button class="nav-btn" data-section="calendar">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendário</span>
+                </button>
+                <button class="nav-btn" data-section="cashbook">
+                    <i class="fas fa-book"></i>
+                    <span>Livro Caixa</span>
+                </button>
+                <button class="nav-btn" data-section="notes">
+                    <i class="fas fa-sticky-note"></i>
+                    <span>Anotações</span>
+                </button>
+                <button class="nav-btn" data-section="memory">
+                    <i class="fas fa-brain"></i>
+                    <span>Memória</span>
+                </button>
+                <button class="nav-btn" data-section="reports">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Relatórios</span>
+                </button>
+            </nav>
+            
+            <div class="user-controls">
+                <button id="themeToggle" class="icon-btn" title="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="notificationBtn" class="icon-btn" title="Notificações">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Conteúdo principal -->
+        <main>
+            <!-- Dashboard -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <p>Bem-vindo à sua agenda inteligente! Aqui está um resumo do seu dia.</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card card priority">
+                        <div class="card-header">
+                            <h3><i class="fas fa-exclamation-circle"></i> Tarefas Prioritárias</h3>
+                            <button class="card-action"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                        <div class="card-content">
+                            <ul id="priorityTasksList" class="task-list">
+                                <!-- Tarefas prioritárias serão carregadas aqui -->
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card card focus">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bullseye"></i> Foco do Dia</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="focus-item">
+                                <h4 id="focusTitle">Complete o relatório mensal</h4>
+                                <div class="focus-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 60%"></div>
+                                    </div>
+                                    <span class="progress-text">60%</span>
+                                </div>
+                                <p class="focus-desc">Termine o relatório financeiro do mês passado</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card card calendar">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-day"></i> Hoje</h3>
+                            <button class="card-action"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="card-content">
+                            <div class="today-date" id="todayDate"></div>
+                            <ul id="todayEvents" class="event-list">
+                                <!-- Eventos de hoje serão carregados aqui -->
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card card stats">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Estatísticas</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="stat-item">
+                                <span class="stat-label">Tarefas Concluídas</span>
+                                <span class="stat-value">12/20</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Foco Semanal</span>
+                                <span class="stat-value">78%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Economia do Mês</span>
+                                <span class="stat-value">R$ 850,00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <h3>Ações Rápidas</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" id="addTaskBtn">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Nova Tarefa</span>
+                        </button>
+                        <button class="action-btn" id="addNoteBtn">
+                            <i class="fas fa-edit"></i>
+                            <span>Nova Anotação</span>
+                        </button>
+                        <button class="action-btn" id="addExpenseBtn">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>Registrar Despesa</span>
+                        </button>
+                        <button class="action-btn" id="generateReportBtn">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Gerar PDF</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Tarefas -->
+            <section id="tasks" class="section">
+                <div class="section-header">
+                    <h2>Tarefas</h2>
+                    <p>Gerencie suas tarefas com lembretes e prioridades.</p>
+                </div>
+                
+                <div class="tasks-container">
+                    <div class="tasks-header">
+                        <div class="filter-tabs">
+                            <button class="filter-btn active" data-filter="all">Todas</button>
+                            <button class="filter-btn" data-filter="pending">Pendentes</button>
+                            <button class="filter-btn" data-filter="completed">Concluídas</button>
+                            <button class="filter-btn" data-filter="high">Prioridade Alta</button>
+                        </div>
+                        
+                        <button class="btn-primary" id="newTaskBtn">
+                            <i class="fas fa-plus"></i> Nova Tarefa
+                        </button>
+                    </div>
+                    
+                    <div class="tasks-list" id="tasksList">
+                        <!-- Tarefas serão carregadas aqui -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Calendário -->
+            <section id="calendar" class="section">
+                <div class="section-header">
+                    <h2>Calendário</h2>
+                    <p>Visualize seus compromissos e eventos em um calendário interativo.</p>
+                </div>
+                
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="currentMonth">Junho 2023</h3>
+                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    
+                    <div class="calendar-weekdays">
+                        <div>Dom</div>
+                        <div>Seg</div>
+                        <div>Ter</div>
+                        <div>Qua</div>
+                        <div>Qui</div>
+                        <div>Sex</div>
+                        <div>Sáb</div>
+                    </div>
+                    
+                    <div class="calendar-days" id="calendarDays">
+                        <!-- Dias do calendário serão gerados aqui -->
+                    </div>
+                </div>
+                
+                <div class="calendar-events">
+                    <h3>Eventos do Dia</h3>
+                    <div class="events-list" id="calendarEventsList">
+                        <!-- Eventos do dia selecionado serão mostrados aqui -->
+                    </div>
+                    <button class="btn-secondary" id="addEventBtn">
+                        <i class="fas fa-plus"></i> Adicionar Evento
+                    </button>
+                </div>
+            </section>
+            
+            <!-- Livro Caixa -->
+            <section id="cashbook" class="section">
+                <div class="section-header">
+                    <h2>Livro Caixa</h2>
+                    <p>Controle suas finanças com entradas e saídas detalhadas.</p>
+                </div>
+                
+                <div class="cashbook-summary">
+                    <div class="summary-card">
+                        <h4>Saldo Atual</h4>
+                        <p class="balance positive">R$ 2.450,00</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Receitas (Mês)</h4>
+                        <p class="income">R$ 4.200,00</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Despesas (Mês)</h4>
+                        <p class="expense">R$ 1.750,00</p>
+                    </div>
+                </div>
+                
+                <div class="cashbook-controls">
+                    <div class="filter-controls">
+                        <select id="cashbookFilter">
+                            <option value="all">Todas as Transações</option>
+                            <option value="income">Apenas Receitas</option>
+                            <option value="expense">Apenas Despesas</option>
+                        </select>
+                        <input type="month" id="cashbookMonth" value="2023-06">
+                    </div>
+                    
+                    <div class="action-controls">
+                        <button class="btn-success" id="addIncomeBtn">
+                            <i class="fas fa-plus-circle"></i> Nova Receita
+                        </button>
+                        <button class="btn-danger" id="addExpenseBtn2">
+                            <i class="fas fa-minus-circle"></i> Nova Despesa
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="cashbook-table-container">
+                    <table class="cashbook-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Categoria</th>
+                                <th>Valor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cashbookTableBody">
+                            <!-- Transações serão carregadas aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Anotações -->
+            <section id="notes" class="section">
+                <div class="section-header">
+                    <h2>Bloco de Anotações</h2>
+                    <p>Capture pensamentos, ideias e informações importantes.</p>
+                </div>
+                
+                <div class="notes-container">
+                    <div class="notes-sidebar">
+                        <div class="notes-categories">
+                            <h4>Categorias</h4>
+                            <ul>
+                                <li class="active">Todas</li>
+                                <li>Pessoal</li>
+                                <li>Trabalho</li>
+                                <li>Estudos</li>
+                                <li>Ideias</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn-primary" id="newNoteBtn">
+                            <i class="fas fa-plus"></i> Nova Anotação
+                        </button>
+                    </div>
+                    
+                    <div class="notes-content">
+                        <div class="notes-list" id="notesList">
+                            <!-- Lista de anotações será carregada aqui -->
+                        </div>
+                        
+                        <div class="note-editor hidden" id="noteEditor">
+                            <div class="editor-header">
+                                <input type="text" id="noteTitle" placeholder="Título da anotação">
+                                <div class="editor-actions">
+                                    <button class="icon-btn" id="saveNoteBtn" title="Salvar">
+                                        <i class="fas fa-save"></i>
+                                    </button>
+                                    <button class="icon-btn" id="deleteNoteBtn" title="Excluir">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                    <button class="icon-btn" id="closeEditorBtn" title="Fechar">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <textarea id="noteContent" placeholder="Comece a escrever..."></textarea>
+                            <div class="editor-footer">
+                                <span id="noteDate"></span>
+                                <span id="noteChars">0 caracteres</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Memória -->
+            <section id="memory" class="section">
+                <div class="section-header">
+                    <h2>Memória</h2>
+                    <p>Lembrete de compromissos recorrentes e informações importantes.</p>
+                </div>
+                
+                <div class="memory-container">
+                    <div class="memory-cards">
+                        <div class="memory-card">
+                            <div class="memory-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <h3>Compromissos Recorrentes</h3>
+                            <p>Lembretes automáticos para atividades regulares</p>
+                            <button class="btn-secondary" id="viewRecurringBtn">Ver</button>
+                        </div>
+                        
+                        <div class="memory-card">
+                            <div class="memory-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <h3>Informações Importantes</h3>
+                            <p>Armazene senhas, contatos e dados essenciais</p>
+                            <button class="btn-secondary" id="viewImportantBtn">Ver</button>
+                        </div>
+                        
+                        <div class="memory-card">
+                            <div class="memory-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h3>Histórico</h3>
+                            <p>Revise atividades passadas e padrões</p>
+                            <button class="btn-secondary" id="viewHistoryBtn">Ver</button>
+                        </div>
+                    </div>
+                    
+                    <div class="memory-content hidden" id="recurringContent">
+                        <h3>Compromissos Recorrentes</h3>
+                        <div class="recurring-list" id="recurringList">
+                            <!-- Compromissos recorrentes serão carregados aqui -->
+                        </div>
+                        <button class="btn-primary" id="addRecurringBtn">
+                            <i class="fas fa-plus"></i> Adicionar Compromisso
+                        </button>
+                    </div>
+                    
+                    <div class="memory-content hidden" id="importantContent">
+                        <h3>Informações Importantes</h3>
+                        <div class="important-list" id="importantList">
+                            <!-- Informações importantes serão carregadas aqui -->
+                        </div>
+                        <button class="btn-primary" id="addImportantBtn">
+                            <i class="fas fa-plus"></i> Adicionar Informação
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Relatórios -->
+            <section id="reports" class="section">
+                <div class="section-header">
+                    <h2>Relatórios</h2>
+                    <p>Gere relatórios em PDF personalizados sobre sua produtividade e finanças.</p>
+                </div>
+                
+                <div class="reports-container">
+                    <div class="reports-options">
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h3>Relatório de Produtividade</h3>
+                            <p>Análise semanal de tarefas concluídas e tempo focado</p>
+                            <button class="btn-primary generate-report" data-report="productivity">
+                                Gerar PDF
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <h3>Relatório Financeiro</h3>
+                            <p>Resumo mensal de receitas, despesas e saldo</p>
+                            <button class="btn-primary generate-report" data-report="financial">
+                                Gerar PDF
+                            </button>
+                        </div>
+                        
+                        <div class="report-card">
+                            <div class="report-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3>Relatório de Atividades</h3>
+                            <p>Compilação de eventos, compromissos e anotações</p>
+                            <button class="btn-primary generate-report" data-report="activities">
+                                Gerar PDF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="report-preview hidden" id="reportPreview">
+                        <h3>Pré-visualização do Relatório</h3>
+                        <div class="preview-content" id="previewContent">
+                            <!-- Conteúdo do relatório será exibido aqui -->
+                        </div>
+                        <div class="preview-actions">
+                            <button class="btn-primary" id="downloadPdfBtn">
+                                <i class="fas fa-download"></i> Baixar PDF
+                            </button>
+                            <button class="btn-secondary" id="closePreviewBtn">
+                                Fechar Pré-visualização
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Modal para adicionar nova tarefa -->
+        <div class="modal hidden" id="taskModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Nova Tarefa</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="taskForm">
+                        <div class="form-group">
+                            <label for="taskTitle">Título da Tarefa</label>
+                            <input type="text" id="taskTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskDescription">Descrição</label>
+                            <textarea id="taskDescription" rows="3"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taskDueDate">Data de Vencimento</label>
+                                <input type="date" id="taskDueDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="taskPriority">Prioridade</label>
+                                <select id="taskPriority">
+                                    <option value="low">Baixa</option>
+                                    <option value="medium">Média</option>
+                                    <option value="high">Alta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskCategory">Categoria</label>
+                            <select id="taskCategory">
+                                <option value="work">Trabalho</option>
+                                <option value="personal">Pessoal</option>
+                                <option value="study">Estudos</option>
+                                <option value="health">Saúde</option>
+                                <option value="other">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="taskReminder"> Definir lembrete
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary close-modal">Cancelar</button>
+                            <button type="submit" class="btn-primary">Salvar Tarefa</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rodapé -->
+        <footer>
+            <p>Agenda Inteligente - Cérebro Zinco &copy; 2023 | Desenvolvida para auxiliar na organização pessoal</p>
+            <div class="footer-links">
+                <button id="installBtn" class="footer-link">Instalar App</button>
+                <button id="helpBtn" class="footer-link">Ajuda</button>
+                <button id="aboutBtn" class="footer-link">Sobre</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
